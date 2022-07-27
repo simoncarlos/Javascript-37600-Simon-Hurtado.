@@ -1,82 +1,81 @@
-let huevos = false;
-let agua = false;
-let queso = false;
-let galletitas = false;
-let carne = false;
+// Variables utilizadas en el programa
 
-alert("\nBienvenido/a a la lista de supermercado, a continuacion ingrese el numero de lista de los productos que vaya añadiendo al carrito, no va a poder retirarse del supermercado hasta que esten todos los productos..");
-alert("\nRecuerde abrir la consola del navegador para poder visualizar la lista :)");
+let usuario = "admin";
+let contraseña = "contraseña";
+let validacion = false;
+
+// Funciones utilizadas en el programa
+
+function ingresar(usuarioIngresado, contraseñaIngresada){
+    
+    if( usuarioIngresado == usuario ){
+        if( contraseñaIngresada == contraseña ){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    else{
+        return false;
+    }
+
+}
+function pedirUsuario(){
+    return prompt("Ingresar nombre de usuario");
+}
+
+function pedirContraseña(){
+    return prompt("Ingresar contraseña");
+}
+
+// Inicio del programa
+
+alert("Bienvenido al inicio de la pagina, por favor seleccione una opcion:");
 
 do{
-    console.log("\nLos productos que faltan son: ");
-    
-    let orden = 1;
-    
-    // A continuacion se imprimen los productos de la lista que no estan añadidos al carrito y se muestra por consola su codigo (aquellos que cuentan con valor false)
 
-    if( !huevos ){
-        console.log(orden + " - Huevos");
-        orden++;
-    }
-    if( !agua ){
-        console.log(orden + " - Agua");
-        orden++;
-    }
-    if( !queso ){
-        console.log(orden + " - Queso");
-        orden++;
-    }
-    if( !galletitas ){
-        console.log(orden + " - Galletitas");
-        orden++;
-    }
-    if( !carne ){
-        console.log(orden + " - Carne");
-        orden++;
-    }
-    
-    let producto = prompt("\nIngrese el numero del producto que desee añadir");
-    
-    // En la primera condicion se analiza si el valor de los productos es true o false, en caso de ser false(no esta añadido), se verifica si coincide con el numero ingresado
+    let opcion = prompt("\n1 - Ingresar con usuario ya existente. \n2 - Crear una cuenta. \n3 - Olvide mi contraseña.");
 
-    let contador = 1;
+    switch ( opcion ) {
+        case "1" : 
+            validacion = ingresar( pedirUsuario(), pedirContraseña() );
+            if( !validacion ){
+                alert("No ingresó los datos de su cuenta correctamente");
+            }
+            break;
 
-    if ( !huevos ) { 
-        if( producto == contador ){
-            huevos = true;
-            continue;
-        }
-        contador ++;
-    }
-    if ( !agua ) { 
-        if( producto == contador ){
-            agua = true;
-            continue;
-        }
-        contador ++;
-    }
-    if ( !queso ) { 
-        if( producto == contador ){
-            queso = true;
-            continue;
-        }
-        contador ++;
-    }
-    if ( !galletitas ) {
-        if( producto == contador ){
-            galletitas = true;
-            continue;
-        }
-        contador ++;
-    }
-    if ( !carne & producto == contador ){
-        carne = true;
-        continue;
-    }
-    
-    alert("\nEl valor ingresado no corresponde a un elemento de la lista del supermercado");
+        case "2" :
+            alert("A continuacion crear su usuario");
+            usuario = pedirUsuario();
+            alert("A continuacion crear su contraseña");
+            contraseña = pedirContraseña();
+            alert("Usted se ha creado la cuenta con exito");
+            validacion = true;
+            break;
 
-}while( !huevos || !agua || !queso || !galletitas || !carne );
+        case "3" :
+            let usuarioEntrada = pedirUsuario();
+            if ( usuarioEntrada == usuario ){
+                //Modificar contraseña e ingresar con el usuario
+                alert("A continuacion va a modificar su contraseña:");
+                contraseña = pedirContraseña();
+                alert("Por favor ingrese a su cuenta con la nueva contraseña");
+                validacion = ingresar( pedirUsuario(), pedirContraseña() );
+                if( !validacion ){
+                    alert("No ingresó los datos de su cuenta correctamente");
+                }
+            }
+            else{
+                alert("Su nombre de usuario no existe, intente nuevamente..");
+            }
+            break;
 
-console.log("\nNo quedan mas productos para añadir al carrito");
-alert("\nFelicidades, usted ya tiene todos los productos de su compra añadidos, puede ir a la caja a pagar");
+        default:
+            alert("El valor ingresado no corresponde a una de las opciones");
+            break;
+    }
+
+}while( !validacion );
+
+alert("Felicidades, usted ha podido ingresar, ya puede navegar por la aplicacion web :)");
